@@ -1,4 +1,4 @@
-## Autors : Thierry Bossard - Simon Parisse
+## Autors : Thierry Bossard - Simon Parisse - Jimmy Brulez
 
 # Getting started with OpenCompare
 
