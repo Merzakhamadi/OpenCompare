@@ -90,45 +90,45 @@ public class GettingStartedTest {
 
     }
 
-    @Test
-    public void testPCMarchive() throws IOException {
-
-        File dir = new File("/Users/macher1/Downloads/model/");
-        assertTrue(dir.isDirectory());
-
-        File[] pcms = dir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".pcm");
-            }
-        });
-
-        assertTrue(pcms.length > 0);
-
-        int i = 0;
-        for (File pcmFile : pcms) {
-
-            PCMLoader loader = new KMFJSONLoader();
-            List<PCMContainer> pcmContainers = loader.load(pcmFile);
-            for (PCMContainer pcmContainer : pcmContainers) {
-                PCM pcm = pcmContainer.getPcm();
-                assertNotNull(pcm);
-                i++;
-
-                String csv = new CSVExporter().export(pcmContainer);
-                FileWriter fw = new FileWriter(new File(csvTargetFolder + "/" + pcmFile.getName().replace(".pcm", ".csv")));
-                fw.write(csv);
-                fw.close();
-            }
-        }
-
-        assertEquals(i, pcms.length);
-
-        System.err.println("#pcms=" + i);
-
-
-
-    }
+//    @Test
+//    public void testPCMarchive() throws IOException {
+//
+//        File dir = new File("/Users/macher1/Downloads/model/");
+//        assertTrue(dir.isDirectory());
+//
+//        File[] pcms = dir.listFiles(new FilenameFilter() {
+//            @Override
+//            public boolean accept(File dir, String name) {
+//                return name.endsWith(".pcm");
+//            }
+//        });
+//
+//        assertTrue(pcms.length > 0);
+//
+//        int i = 0;
+//        for (File pcmFile : pcms) {
+//
+//            PCMLoader loader = new KMFJSONLoader();
+//            List<PCMContainer> pcmContainers = loader.load(pcmFile);
+//            for (PCMContainer pcmContainer : pcmContainers) {
+//                PCM pcm = pcmContainer.getPcm();
+//                assertNotNull(pcm);
+//                i++;
+//
+//                String csv = new CSVExporter().export(pcmContainer);
+//                FileWriter fw = new FileWriter(new File(csvTargetFolder + "/" + pcmFile.getName().replace(".pcm", ".csv")));
+//                fw.write(csv);
+//                fw.close();
+//            }
+//        }
+//
+//        assertEquals(i, pcms.length);
+//
+//        System.err.println("#pcms=" + i);
+//
+//
+//
+//    }
 
     @Test
     public void testGettingStarted() throws IOException {
