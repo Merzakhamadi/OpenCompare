@@ -1,3 +1,5 @@
+## Autors : Thierry Bossard
+
 # Getting started with OpenCompare
 
 Examples for using OpenCompare API and services
