@@ -8,14 +8,11 @@ public class Item {
 	private String name;
 	private List<Property> listProperties;
 
-	public Item() {
-		super();
-	}
-
 	public Item(String name) {
 		super();
 		this.name = name;
 		this.listProperties = new ArrayList<Property>();
+
 	}
 
 	public String getName() {

@@ -5,10 +5,6 @@ public class Property {
 	private String name;
 	private String value;
 
-	public Property() {
-		super();
-	}
-
 	public Property(String name, String value) {
 		super();
 		this.name = name;
