@@ -1,35 +1,44 @@
 package org.opencompare.objects;
 
-import java.io.File;
 import java.io.IOException;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class App {
 
 	public static void main(String[] args) throws IOException {
 		Matrice maMatrice = new Matrice("MatriceTest");
 		maMatrice.importPcmFile("pcms/example.pcm");
-//		System.out.println(maMatrice.getNbrOfProperties());
-//		System.out.println(maMatrice.getNameOfProperty());
+		
+		List<String> listProperties = new ArrayList<String>();
+		listProperties = maMatrice.getListPropertiesIntegerValue();
+				
+		System.out.println("-----------------OPENCOMPARE-------------------");
+		System.out.println("Caractéristiques :");
+		int count = 0;
+		for(String property : listProperties)
+		{
+			System.out.println(count + " : " + property);
+			count++ ;
+		}
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Saisir au clavier la caractéristique en Axe X : ");
+		maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
+		System.out.println("-------------------------------------------------");
+		System.out.println("Saisir au clavier la caractéristique en Axe Y : ");
+		maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
+		System.out.println("-------------------------------------------------");
+		System.out.println("Saisir au clavier la caractéristique en Axe Color : ");
+		maMatrice.setPropertyAxisColor(listProperties.get(sc.nextInt()));
+		System.out.println("-------------------------------------------------");
+		System.out.println("Saisir au clavier la caractéristique en Axe Taille : ");
+		maMatrice.setPropertyAxisSize(listProperties.get(sc.nextInt()));
+		System.out.println("-------------------------------------------------");
+		
+		
 		maMatrice.setMatrice();
-//		System.out.println(maMatrice.getListItems().size());
-//		for(Item i : maMatrice.getListItems())
-//		{
-//			System.out.println("-----------------" + i.getName() + "-------------------");
-//			for(Property p : i.getListFeatures())
-//			{
-//				System.out.println(p.getName() + " = " + p.getValue());
-//			}
-//			
-//		}
 		maMatrice.toJson("json/matrice.json");
-		
-		
-		
-
 	}
 	
 

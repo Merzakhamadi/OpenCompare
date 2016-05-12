@@ -12,7 +12,6 @@ public class Item {
 		super();
 		this.name = name;
 		this.listProperties = new ArrayList<Property>();
-
 	}
 
 	public String getName() {
@@ -31,7 +30,7 @@ public class Item {
 		this.listProperties = listProperties;
 	}
 
-	public void addFeatureToList(Property propertyToAdd) {
+	public void addPropertyToList(Property propertyToAdd) {
 		this.listProperties.add(propertyToAdd);
 	}
 
