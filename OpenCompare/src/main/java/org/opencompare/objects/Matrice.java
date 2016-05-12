@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.opencompare.api.java.Cell;
 import org.opencompare.api.java.Feature;
 import org.opencompare.api.java.PCM;
@@ -92,6 +95,30 @@ public class Matrice {
 				i.addFeatureToList(p);
 			}
 			this.addItemToList(i);
+		}
+	}
+	
+	public void toJson(String path){
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			//Convert object to JSON string and save into file directly 
+			mapper.writeValue(new File(path), this);
+			
+			//Convert object to JSON string
+			String jsonInString = mapper.writeValueAsString(this);
+			System.out.println(jsonInString);
+			
+			//Convert object to JSON string and pretty print
+			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+			System.out.println(jsonInString);
+			
+			
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
