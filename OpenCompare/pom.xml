@@ -9,12 +9,13 @@
     <version>0.7</version>
     
     <dependencies>
+    	<!-- JACKSON FOR JSON -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+			
         <!-- Dependencies to Java API of OpenCompare and its implementation -->
         <dependency>
             <groupId>org.opencompare</groupId>
