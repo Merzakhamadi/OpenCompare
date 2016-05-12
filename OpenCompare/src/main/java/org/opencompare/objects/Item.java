@@ -23,7 +23,7 @@ public class Item {
 		this.name = name;
 	}
 
-	public List<Property> getListFeatures() {
+	public List<Property> getListProperties() {
 		return listProperties;
 	}
 

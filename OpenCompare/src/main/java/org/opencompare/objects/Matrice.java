@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.opencompare.api.java.Cell;
 import org.opencompare.api.java.Feature;
 import org.opencompare.api.java.PCM;
@@ -59,6 +61,7 @@ public class Matrice {
 		}
 	}
 
+	@JsonIgnore
 	public int getNbrOfProperties() {
 		int NbrOfProperties = 0;
 		List<Feature> listFeatures = pcm.getConcreteFeatures();
@@ -67,6 +70,7 @@ public class Matrice {
 		return NbrOfProperties;
 	}
 
+	@JsonIgnore
 	public List<String> getNameOfProperty() {
 		List<String> listToReturn = new ArrayList<String>();
 		List<Feature> listFeatures = pcm.getConcreteFeatures();
@@ -106,7 +110,7 @@ public class Matrice {
 			
 			//Convert object to JSON string
 			String jsonInString = mapper.writeValueAsString(this);
-			System.out.println(jsonInString);
+			//System.out.println(jsonInString);
 			
 			//Convert object to JSON string and pretty print
 			jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
