@@ -2,10 +2,13 @@ package org.opencompare;
 
 import org.opencompare.api.java.PCM;
 import org.opencompare.api.java.impl.io.KMFJSONLoader;
+
 import static org.junit.Assert.*;
 
 import org.opencompare.api.java.io.PCMLoader;
 import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,5 +31,6 @@ public class VisitorTest {
         MyPCMPrinter myPrinter = new MyPCMPrinter();
         myPrinter.print(pcm);
     }
-
+    	
+    
 }

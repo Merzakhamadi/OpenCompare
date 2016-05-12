@@ -17,19 +17,36 @@ public class MyPCMPrinter implements PCMVisitor {
      */
     public void print(PCM pcm) {
 
-        // We start by listing the names of the products
-        System.out.println("--- Products ---");
+//        // We start by listing the names of the products
+//        System.out.println("--- Products ---");
+//        for (Product product : pcm.getProducts()) {
+//            System.out.println(product.getKeyContent());
+//            
+//        }
+//        
+//        // Then, we use a visitor to print the content of the cells that represent a boolean value
+//        System.out.println("--- Boolean values ---");
+//        pcm.accept(this);
+//        
+     // Browse the cells of the PCM
         for (Product product : pcm.getProducts()) {
-            System.out.println(product.getKeyContent());
-        }
+          for (Feature feature : pcm.getConcreteFeatures()) {
+            // Find the cell corresponding to the current feature and product
+            Cell cell = product.findCell(feature);
 
-        // Then, we use a visitor to print the content of the cells that represent a boolean value
-        System.out.println("--- Boolean values ---");
-        pcm.accept(this);
+            // Get information contained in the cell
+            String content = cell.getContent();
+            String rawContent = cell.getRawContent();
+            Value interpretation = cell.getInterpretation();
+
+            // Print the content of the cell
+            System.out.println("(" + product.getKeyContent() + ", " + feature.getName() + ") = " + content);
+          }
+        }
 
     }
 
-
+    
     // Methods for the visitor
 
     @Override

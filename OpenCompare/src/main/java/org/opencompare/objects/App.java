@@ -11,7 +11,6 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 		Matrice maMatrice = new Matrice("MatriceTest");
-		
 		maMatrice.importPcmFile("pcms/example.pcm");
 //		System.out.println(maMatrice.getNbrOfProperties());
 //		System.out.println(maMatrice.getNameOfProperty());
@@ -26,8 +25,10 @@ public class App {
 //			}
 //			
 //		}
-		
 		maMatrice.toJson("json/matrice.json");
+		
+		
+		
 
 	}
 	

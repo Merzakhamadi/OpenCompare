@@ -21,22 +21,22 @@ import org.opencompare.api.java.io.PCMLoader;
 
 public class Matrice {
 
-	private String name;
+	private String titre;
 	private List<Item> listItems;
 	private PCM pcm;
 
-	public Matrice(String name) {
+	public Matrice(String titre) {
 		super();
-		this.name = name;
+		this.titre = titre;
 		this.listItems = new ArrayList<Item>();
 	}
 
-	public String getName() {
-		return name;
+	public String getTitre() {
+		return titre;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String titre) {
+		this.titre = titre;
 	}
 
 	public List<Item> getListItems() {
@@ -81,6 +81,8 @@ public class Matrice {
 
 		return listToReturn;
 	}
+	
+	
 
 	public void setMatrice() {
 		for (Product product : pcm.getProducts()) {
@@ -88,15 +90,16 @@ public class Matrice {
 
 			for (Feature feature : pcm.getConcreteFeatures()) {
 
-				// Find the cell corresponding to the current feature and
-				// product
+				// Find the cell corresponding to the current feature and product
 				Cell cell = product.findCell(feature);
 
 				// Get information contained in the cell
 				String content = cell.getContent();
-
-				Property p = new Property(feature.getName(), content);
-				i.addFeatureToList(p);
+				
+				if(isNumeric(content)){
+					Property p = new Property(feature.getName(), content);
+					i.addFeatureToList(p);
+				}
 			}
 			this.addItemToList(i);
 		}
@@ -124,6 +127,15 @@ public class Matrice {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static boolean isNumeric(String str)
+	{
+	    for (char c : str.toCharArray())
+	    {
+	        if (!Character.isDigit(c)) return false;
+	    }
+	    return true;
 	}
 
 }
