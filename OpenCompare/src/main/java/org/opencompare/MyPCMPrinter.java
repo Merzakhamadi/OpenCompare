@@ -1,4 +1,4 @@
-package org.opencompare;
+   package org.opencompare;
 
 import org.opencompare.api.java.*;
 import org.opencompare.api.java.util.PCMVisitor;
