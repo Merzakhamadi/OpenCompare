@@ -6,43 +6,29 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonView;
+import org.apache.commons.io.FilenameUtils;
 import org.opencompare.api.java.Cell;
 import org.opencompare.api.java.Feature;
 import org.opencompare.api.java.PCM;
 import org.opencompare.api.java.PCMContainer;
 import org.opencompare.api.java.Product;
-import org.opencompare.api.java.Value;
+import org.opencompare.api.java.extractor.CellContentInterpreter;
+import org.opencompare.api.java.impl.PCMFactoryImpl;
 import org.opencompare.api.java.impl.io.KMFJSONLoader;
+import org.opencompare.api.java.io.CSVLoader;
 import org.opencompare.api.java.io.PCMLoader;
 
 public class Matrice {
-
-	private String titre;
 	private List<Item> listItems;
 	private PCM pcm;
 
 	private String propertyAxisX;
 	private String propertyAxisY;
-	private String propertyAxisColor;
 	private String propertyAxisSize;
 
-	public Matrice(String titre) {
+	public Matrice() {
 		super();
-		this.titre = titre;
 		this.listItems = new ArrayList<Item>();
-	}
-
-	public String getTitre() {
-		return titre;
-	}
-
-	public void setName(String titre) {
-		this.titre = titre;
 	}
 
 	public List<Item> getListItems() {
@@ -73,14 +59,6 @@ public class Matrice {
 		this.propertyAxisY = propertyAxisY;
 	}
 
-	public String getPropertyAxisColor() {
-		return propertyAxisColor;
-	}
-
-	public void setPropertyAxisColor(String propertyAxisColor) {
-		this.propertyAxisColor = propertyAxisColor;
-	}
-
 	public String getPropertyAxisSize() {
 		return propertyAxisSize;
 	}
@@ -99,7 +77,26 @@ public class Matrice {
 		}
 	}
 
-	@JsonIgnore
+	public void importCsvFileToPcm(String pathCsvFile) throws IOException {
+		CSVLoader csvL = new CSVLoader(new PCMFactoryImpl(),
+				new CellContentInterpreter(new PCMFactoryImpl()));
+		List<PCMContainer> pcms = csvL.load(new File(pathCsvFile));
+		for (PCMContainer pcmContainer : pcms) {
+			this.pcm = pcmContainer.getPcm();
+		}
+
+	}
+
+	public void importFile(String pathFile) throws IOException {
+			String ext = FilenameUtils.getExtension(pathFile);
+
+			if (ext.equals("pcm")) {
+				this.importPcmFile(pathFile);
+			} else if (ext.equals("csv")) {
+				this.importCsvFileToPcm(pathFile);
+			}
+	}
+
 	public int getNbrOfProperties() {
 		int NbrOfProperties = 0;
 		List<Feature> listFeatures = pcm.getConcreteFeatures();
@@ -108,7 +105,6 @@ public class Matrice {
 		return NbrOfProperties;
 	}
 
-	@JsonIgnore
 	public List<String> getListPropertiesIntegerValue() {
 		List<String> listProperties = new ArrayList<String>();
 		Product product = pcm.getProducts().get(0);
@@ -136,39 +132,14 @@ public class Matrice {
 				// Get information contained in the cell
 				String content = cell.getContent();
 
-				if(propertyAxisX == feature.getName() 
-					|| propertyAxisY == feature.getName() 
-					|| propertyAxisColor == feature.getName() 
-					|| propertyAxisSize == feature.getName()){	
+				if (propertyAxisX == feature.getName()
+						|| propertyAxisY == feature.getName()
+						|| propertyAxisSize == feature.getName()) {
 					Property p = new Property(feature.getName(), content);
 					i.addPropertyToList(p);
 				}
 			}
 			this.addItemToList(i);
-		}
-	}
-
-	public void toJson(String path) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			// Convert object to JSON string and save into file directly
-			mapper.writeValue(new File(path), this);
-
-			// Convert object to JSON string
-			String jsonInString = mapper.writeValueAsString(this);
-			// System.out.println(jsonInString);
-
-			// Convert object to JSON string and pretty print
-			jsonInString = mapper.writerWithDefaultPrettyPrinter()
-					.writeValueAsString(this);
-			System.out.println(jsonInString);
-
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -179,5 +150,7 @@ public class Matrice {
 		}
 		return true;
 	}
+	
+	
 
 }
