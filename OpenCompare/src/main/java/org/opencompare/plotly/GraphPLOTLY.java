@@ -1,4 +1,4 @@
-package org.opencompare.nvd;
+package org.opencompare.plotly;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,15 +13,64 @@ import org.opencompare.objects.Item;
 import org.opencompare.objects.Matrice;
 import org.opencompare.objects.Property;
 
-public class RootNVD {
-	List<ObjectNVD> listObjectNVD;
+public class GraphPLOTLY {
 
-	public RootNVD() {
+	private List<String> text;
+	private List<Object> x;
+	private List<Object> y;
+	private String mode;
+	private Marker marker;
+
+	public GraphPLOTLY() {
 		super();
-		listObjectNVD = new ArrayList<ObjectNVD>();
+		this.marker = new Marker();
+		this.text = new ArrayList<String>();
+		this.x = new ArrayList<Object>();
+		this.y = new ArrayList<Object>();
+		this.mode = "markers";
 	}
 
-	public void createMap(Matrice matrice) {
+	public List<String> getText() {
+		return text;
+	}
+
+	public void setText(List<String> text) {
+		this.text = text;
+	}
+
+	public List<Object> getX() {
+		return x;
+	}
+
+	public void setX(List<Object> x) {
+		this.x = x;
+	}
+
+	public List<Object> getY() {
+		return y;
+	}
+
+	public void setY(List<Object> y) {
+		this.y = y;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public Marker getMarker() {
+		return marker;
+	}
+
+	public void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+
+	public void getGraph(Matrice matrice) {
 
 		for (Item item : matrice.getListItems()) {
 			String key = item.getName();
@@ -32,34 +81,26 @@ public class RootNVD {
 			String color = getColorFromPropertyAsisColor(item,
 					matrice.getPropertyAxisColor());
 
-			ObjectNVD object = new ObjectNVD(key, x, y, size, "circle", color);
-			this.listObjectNVD.add(object);
-		}
+			this.text.add(key);
+			this.x.add(x);
+			this.y.add(y);
 
+			this.marker.getcolor().add(color);
+			this.marker.getsize().add(size);
+
+		}
 	}
 
 	private String getColorFromPropertyAsisColor(Item item,
 			String propertyAxisColor) {
-		String c = null;
+		String color = null;
 		for (Property property : item.getListProperties()) {
 			if (property.getName().equals(propertyAxisColor)) {
-				c = property.getValue();
+				color = property.getValue();
 			}
 		}
 
-		return c;
-	}
-
-	public List<ObjectNVD> getListObjectNVD() {
-		return listObjectNVD;
-	}
-
-	public void setListObjectNVD(List<ObjectNVD> listObjectNVD) {
-		this.listObjectNVD = listObjectNVD;
-	}
-
-	public void addObjecttoListObjectNVD(ObjectNVD objectToAdd) {
-		this.listObjectNVD.add(objectToAdd);
+		return color;
 	}
 
 	public String getXFromPropertyAsisX(Item item, String propertyAxisX) {
@@ -99,24 +140,15 @@ public class RootNVD {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
-
 			// Convert object to JSON string
-			String jsonInString = mapper.writeValueAsString(this);
-
-			// DELETE { } and "listObjectNVD : " for respect JSON Format
-			jsonInString = jsonInString
-					.substring(17, jsonInString.length() - 1);
+			String jsonInString = "[";
+			jsonInString += mapper.writeValueAsString(this);
+			jsonInString += "]";
 
 			FileUtils.writeStringToFile(new File(path), jsonInString);
 
 			// Test
 			System.out.println(jsonInString);
-
-			// Convert object to JSON string and pretty print
-			// jsonInString = mapper.writerWithDefaultPrettyPrinter()
-			// .writeValueAsString(this);
-			//
-			// System.out.println(jsonInString);
 
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
@@ -125,6 +157,34 @@ public class RootNVD {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static class Marker {
+		private List<Object> size;
+		private List<Object> color;
+
+		public Marker() {
+			super();
+			this.color = new ArrayList<Object>();
+			this.size = new ArrayList<Object>();
+		}
+
+		public List<Object> getcolor() {
+			return color;
+		}
+
+		public void setcolor(List<Object> color) {
+			this.color = color;
+		}
+
+		public List<Object> getsize() {
+			return size;
+		}
+
+		public void setsize(List<Object> size) {
+			this.size = size;
+		}
+
 	}
 
 }
