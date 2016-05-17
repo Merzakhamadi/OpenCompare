@@ -10,3 +10,7 @@ buildNumber.properties
 *.iml
 /bin/
 .classpath
+/target/
+/target/
+/target/
+/target/
