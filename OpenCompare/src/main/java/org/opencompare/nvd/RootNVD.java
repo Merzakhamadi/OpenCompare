@@ -91,7 +91,7 @@ public class RootNVD {
 			//DELETE { } and "listObjectNVD : " for respect JSON Format
 			jsonInString = jsonInString.substring(17, jsonInString.length() - 1);
 
-			FileUtils.writeStringToFile(new File("www/json/test.json"),
+			FileUtils.writeStringToFile(new File(path),
 					jsonInString);
 			
 			//Test
