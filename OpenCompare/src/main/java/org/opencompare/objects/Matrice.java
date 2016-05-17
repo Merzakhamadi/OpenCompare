@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.opencompare.api.java.Cell;
 import org.opencompare.api.java.Feature;
@@ -25,6 +26,9 @@ public class Matrice {
 	private String propertyAxisX;
 	private String propertyAxisY;
 	private String propertyAxisSize;
+	private String propertyAxisColor;
+
+	private String titre;
 
 	public Matrice() {
 		super();
@@ -67,6 +71,22 @@ public class Matrice {
 		this.propertyAxisSize = propertyAxisSize;
 	}
 
+	public String getPropertyAxisColor() {
+		return propertyAxisColor;
+	}
+
+	public void setPropertyAxisColor(String propertyAxisColor) {
+		this.propertyAxisColor = propertyAxisColor;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
 	public void importPcmFile(String pathPcmFile) throws IOException {
 
 		File pcmFile = new File(pathPcmFile);
@@ -88,13 +108,13 @@ public class Matrice {
 	}
 
 	public void importFile(String pathFile) throws IOException {
-			String ext = FilenameUtils.getExtension(pathFile);
+		String ext = FilenameUtils.getExtension(pathFile);
 
-			if (ext.equals("pcm")) {
-				this.importPcmFile(pathFile);
-			} else if (ext.equals("csv")) {
-				this.importCsvFileToPcm(pathFile);
-			}
+		if (ext.equals("pcm")) {
+			this.importPcmFile(pathFile);
+		} else if (ext.equals("csv")) {
+			this.importCsvFileToPcm(pathFile);
+		}
 	}
 
 	public int getNbrOfProperties() {
@@ -119,7 +139,7 @@ public class Matrice {
 		return listProperties;
 	}
 
-	public void setMatrice() {
+	public void setMatrice(int nbrProperty) {
 		for (Product product : pcm.getProducts()) {
 			Item i = new Item(product.getKeyContent());
 
@@ -132,11 +152,41 @@ public class Matrice {
 				// Get information contained in the cell
 				String content = cell.getContent();
 
-				if (propertyAxisX == feature.getName()
-						|| propertyAxisY == feature.getName()
-						|| propertyAxisSize == feature.getName()) {
-					Property p = new Property(feature.getName(), content);
-					i.addPropertyToList(p);
+				switch (nbrProperty) {
+
+				case 1:
+					if (propertyAxisX == feature.getName()) {
+						Property p = new Property(feature.getName(), content);
+						i.addPropertyToList(p);
+					}
+					break;
+
+				case 2:
+					if (propertyAxisX == feature.getName()
+							|| propertyAxisY == feature.getName()) {
+						Property p = new Property(feature.getName(), content);
+						i.addPropertyToList(p);
+					}
+					break;
+
+				case 3:
+					if (propertyAxisX == feature.getName()
+							|| propertyAxisY == feature.getName()
+							|| propertyAxisSize == feature.getName()) {
+						Property p = new Property(feature.getName(), content);
+						i.addPropertyToList(p);
+					}
+					break;
+
+				case 4:
+					if (propertyAxisX == feature.getName()
+							|| propertyAxisY == feature.getName()
+							|| propertyAxisSize == feature.getName()
+							|| propertyAxisColor == feature.getName()) {
+						Property p = new Property(feature.getName(), content);
+						i.addPropertyToList(p);
+					}
+					break;
 				}
 			}
 			this.addItemToList(i);
@@ -150,7 +200,14 @@ public class Matrice {
 		}
 		return true;
 	}
-	
-	
+
+	public void writePropertiesAxisFile() throws IOException {
+		String json = "{\"titre\":\"" + titre + "\",\"labelx\":\""
+				+ propertyAxisX + "\",\"labely\":\"" + propertyAxisY
+				+ "\",\"labelsize\":\"" + propertyAxisSize
+				+ "\",\"labelcolor\":\"" + propertyAxisColor + "\"}";
+
+		FileUtils.writeStringToFile(new File("www/json/param.json"), json);
+	}
 
 }
