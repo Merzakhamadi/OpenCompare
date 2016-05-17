@@ -21,7 +21,7 @@ public class testMatrice extends TestCase{
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		matrice = new Matrice("ma");
+		matrice = new Matrice();
 		}
 	
 	protected void tearDown() throws Exception {
