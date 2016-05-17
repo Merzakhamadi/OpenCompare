@@ -1,0 +1,38 @@
+[
+{
+	"key": "critere-01",
+	"values": [{
+		"x": 1,
+		"y": 5,
+		"size": 5,
+		"shape": "circle"
+	}]
+},
+{
+	"key": "critere-02",
+	"values": [{
+		"x": 2,
+		"y": 6,
+		"size":20,
+		"shape": "circle"
+	}]
+},
+{
+	"key": "critere-03",
+	"values": [{
+		"x": 3,
+		"y": 3,
+		"size": 100,
+		"shape": "circle"
+	}]
+},
+{
+	"key": "critere-03",
+	"values": [{
+		"x": 4,
+		"y": 10,
+		"size": 500,
+		"shape": "circle"
+	}]
+}
+]
