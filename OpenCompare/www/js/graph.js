@@ -76,7 +76,7 @@ nv.addGraph(function() {
          //.datum(dataa)
          .datum(JSON.parse(response))
          .call(chart);
-     },'json/matrice.json');
+     },'json/nvd.json');
 
     //randomData(1,20);
     //console.log(JSON.stringify(dataa));
