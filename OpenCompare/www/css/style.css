@@ -1,0 +1,24 @@
+  text {
+    font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+        #graph {
+            margin: 20px;
+            padding: 0px;
+            height: 90%;
+            width: 90%;
+            border: 2px solid black;
+            align-self:center;
+        }
+        .col-centered{
+            float: none;
+            margin: 0 auto;
+          }
