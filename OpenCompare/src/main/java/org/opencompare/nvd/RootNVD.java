@@ -108,15 +108,6 @@ public class RootNVD {
 
 			FileUtils.writeStringToFile(new File(path), jsonInString);
 
-			// Test
-			System.out.println(jsonInString);
-
-			// Convert object to JSON string and pretty print
-			// jsonInString = mapper.writerWithDefaultPrettyPrinter()
-			// .writeValueAsString(this);
-			//
-			// System.out.println(jsonInString);
-
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

@@ -147,9 +147,6 @@ public class GraphPLOTLY {
 
 			FileUtils.writeStringToFile(new File(path), jsonInString);
 
-			// Test
-			System.out.println(jsonInString);
-
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

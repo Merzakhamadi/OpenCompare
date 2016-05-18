@@ -118,11 +118,7 @@ public class Matrice {
 	}
 
 	public int getNbrOfProperties() {
-		int NbrOfProperties = 0;
-		List<Feature> listFeatures = pcm.getConcreteFeatures();
-		NbrOfProperties = listFeatures.size();
-
-		return NbrOfProperties;
+		return getListPropertiesIntegerValue().size();
 	}
 
 	public List<String> getListPropertiesIntegerValue() {
@@ -153,7 +149,6 @@ public class Matrice {
 				String content = cell.getContent();
 
 				switch (nbrProperty) {
-
 				case 1:
 					if (propertyAxisX == feature.getName()) {
 						Property p = new Property(feature.getName(), content);

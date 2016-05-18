@@ -46,6 +46,8 @@ public class HtmlGenerator {
 		} catch (IOException exception) {
 			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
 		}
+		UnZip unziper = new UnZip();
+		unziper.unzipFunction("www","ressources.zip");
 	}
 
 	public void writeHeader() {
@@ -59,6 +61,7 @@ public class HtmlGenerator {
 		this.pw.println("\t<script src=\"js/jquery/jquery-1.12.3.min.js\"></script>");
 		this.pw.println("\t<script src=\"js/bootstrap/bootstrap.min.js\"></script>");
 		this.pw.println("\t<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">");
+		this.pw.println("<link href=\"css/style.css\" rel=\"stylesheet\">");
 
 		if(this.isNvd()){
 			this.pw.println("\t<link href=\"js/nvd3/build/nv.d3.css\" rel=\"stylesheet\" type=\"text/css\">");
@@ -89,26 +92,36 @@ public class HtmlGenerator {
 		this.pw.println("\t\t<div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">");
 		this.pw.println("\t\t\t<ul class=\"nav navbar-nav\">");
 		this.pw.println("\t\t\t\t<li>");
-		this.pw.println("\t\t\t\t\t<a href=\"#\">About</a>");
+		this.pw.println("\t\t\t\t\t<a href=\"about.html\">About</a>");
 		this.pw.println("\t\t\t\t</li>");
 		this.pw.println("\t\t\t</ul>");
 		this.pw.println("\t\t</div>");
 		this.pw.println("\t</div>");
 		this.pw.println("\t</nav>");
+		this.pw.println("\t<br>");
+		this.pw.println("\t<br>");
 		
 		if(this.isNvd()){
-			this.pw.println("\t<br></br>");
-			this.pw.println("\t<br></br>");
+			this.pw.println("\t<div class=\"row\">");
+			this.pw.println("\t<div class=\"col-lg-3 col-centered\">");
+			this.pw.println("\t<div id='graphtitle'></div>");
+			this.pw.println("\t</div>");
+			this.pw.println("\t</div>");
+	    
 			this.pw.println("<div id=\"graph\" class='with-3d-shadow with-transitions'>");
 			this.pw.println("<svg></svg>");
 			this.pw.println("</div>");
-			this.pw.println("<script src=\"js/graph.js\"></script>");
+			this.pw.println("<script src=\"js/graph_nvd.js\"></script>");
 		}
 		else if(this.isPlotly()){
-			//ADD PLOTLY GRAPH
+			
+			this.pw.println("<div id=\"graph\" class='with-3d-shadow with-transitions'>");
+			this.pw.println("</div>");
+			this.pw.println("<script src=\"js/graph_plotly.js\"></script>");
 		}
 	    
 		this.pw.println("</body>");
+		this.pw.println("</html>");
 	}
 
 }
