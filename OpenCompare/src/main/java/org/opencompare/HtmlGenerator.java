@@ -8,68 +8,107 @@ import java.io.PrintWriter;
 
 public class HtmlGenerator {
 
-	public HtmlGenerator() {
+	private boolean nvd;
+	private boolean plotly;
+	private PrintWriter pw;
+
+	public HtmlGenerator(boolean nvd, boolean plotly) {
 		super();
+		this.nvd = nvd;
+		this.plotly = plotly;
 	}
 
-	public static void main(String[] args) {
+	public boolean isNvd() {
+		return nvd;
+	}
 
-		HtmlGenerator htmlGenerator = new HtmlGenerator();
+	public void setNvd(boolean nvd) {
+		this.nvd = nvd;
+	}
+
+	public boolean isPlotly() {
+		return plotly;
+	}
+
+	public void setPlotly(boolean plotly) {
+		this.plotly = plotly;
+	}
+
+	public void writeAll()
+	{
 		File f = new File("www/index.html");
 
 		try {
-			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
-					f)));
-			htmlGenerator.writeHeader(pw);
-			htmlGenerator.writeBody(pw);
-
-			pw.close();
+			this.pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			this.writeHeader();
+			this.writeBody();
+			this.pw.close();
 		} catch (IOException exception) {
-			System.out.println("Erreur lors de la lecture : "
-					+ exception.getMessage());
+			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
 		}
+	}
+
+	public void writeHeader() {
+		this.pw.println("<!DOCTYPE html>");
+		this.pw.println("<html lang=\"fr\">");
+		this.pw.println("<head>");
+		this.pw.println("\t<meta charset=\"utf-8\">");
+		this.pw.println("\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">");
+		this.pw.println("\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
+		this.pw.println("\t<title>OpenCompare</title>");
+		this.pw.println("\t<script src=\"js/jquery/jquery-1.12.3.min.js\"></script>");
+		this.pw.println("\t<script src=\"js/bootstrap/bootstrap.min.js\"></script>");
+		this.pw.println("\t<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">");
+
+		if(this.isNvd()){
+			this.pw.println("\t<link href=\"js/nvd3/build/nv.d3.css\" rel=\"stylesheet\" type=\"text/css\">");
+			this.pw.println("\t<script src=\"js/nvd3/build/d3.min.js\" charset=\"utf-8\"></script>");
+			this.pw.println("\t<script src=\"js/nvd3/build/nv.d3.js\"></script>");
+		}
+		else if(this.isPlotly()){
+			this.pw.println("<script src=\"js/plotly/build/plotly-latest.min.js\"></script>");
+			this.pw.println("<script src=\"js/plotly/build/plotly-1.2.0.min.js\"></script>");
+		}
+		this.pw.println("</head>");
 
 	}
 
-	public void writeHeader(PrintWriter pw) {
-		pw.println("<!DOCTYPE html>");
-		pw.println("<html lang=\"fr\">");
-		pw.println("<head>");
-		pw.println("\t<meta charset=\"utf-8\">");
-		pw.println("\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">");
-		pw.println("\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-		pw.println("\t<title>OpenCompare</title>");
-		pw.println("\t<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">");
-		pw.println("\t<script src=\"https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js\"></script>");
-		pw.println("\t<script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.min.js\"></script>");
-		pw.println("</head>");
-	}
-
-	public void writeBody(PrintWriter pw) {
-		pw.println("<body>");
-		pw.println("\t<nav class=\"navbar navbar-inverse navbar-fixed-top\" role=\"navigation\">");
-		pw.println("\t<div class=\"container\">");
-		pw.println("\t\t<div class=\"navbar-header\">");
-		pw.println("\t\t\t<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\">");
-		pw.println("\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>");
-		pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
-		pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
-		pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
-		pw.println("\t\t\t</button>");
-		pw.println("\t\t\t<a class=\"navbar-brand\" href=\"#\">OpenCompare</a>");
-		pw.println("\t\t</div>");
-		pw.println("\t\t<div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">");
-		pw.println("\t\t\t<ul class=\"nav navbar-nav\">");
-		pw.println("\t\t\t\t<li>");
-		pw.println("\t\t\t\t\t<a href=\"#\">About</a>");
-		pw.println("\t\t\t\t</li>");
-		pw.println("\t\t\t</ul>");
-		pw.println("\t\t</div>");
-		pw.println("\t</div>");
-		pw.println("\t</nav>");
-		pw.println("\t<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>");
-		pw.println("\t<script src=\"js/bootstrap.min.js\"></script>");
-		pw.println("</body>");
+	public void writeBody() {
+		this.pw.println("<body>");
+		this.pw.println("\t<nav class=\"navbar navbar-inverse navbar-fixed-top\" role=\"navigation\">");
+		this.pw.println("\t<div class=\"container\">");
+		this.pw.println("\t\t<div class=\"navbar-header\">");
+		this.pw.println("\t\t\t<button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\">");
+		this.pw.println("\t\t\t\t<span class=\"sr-only\">Toggle navigation</span>");
+		this.pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
+		this.pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
+		this.pw.println("\t\t\t\t<span class=\"icon-bar\"></span>");
+		this.pw.println("\t\t\t</button>");
+		this.pw.println("\t\t\t<a class=\"navbar-brand\" href=\"index.html\">OpenCompare</a>");
+		this.pw.println("\t\t</div>");
+		this.pw.println("\t\t<div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">");
+		this.pw.println("\t\t\t<ul class=\"nav navbar-nav\">");
+		this.pw.println("\t\t\t\t<li>");
+		this.pw.println("\t\t\t\t\t<a href=\"#\">About</a>");
+		this.pw.println("\t\t\t\t</li>");
+		this.pw.println("\t\t\t</ul>");
+		this.pw.println("\t\t</div>");
+		this.pw.println("\t</div>");
+		this.pw.println("\t</nav>");
+		
+		if(this.isNvd()){
+			this.pw.println("\t<br></br>");
+			this.pw.println("\t<br></br>");
+			this.pw.println("<div id=\"graph\" class='with-3d-shadow with-transitions'>");
+			this.pw.println("<svg></svg>");
+			this.pw.println("</div>");
+			this.pw.println("<script src=\"js/graph.js\"></script>");
+		}
+		else if(this.isPlotly()){
+			//ADD PLOTLY GRAPH
+		}
+	    
+		this.pw.println("</body>");
 	}
 
 }
