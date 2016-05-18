@@ -216,7 +216,7 @@ public class testMatrice extends TestCase{
 		assertEquals("markers", n);
 		
 		JSONObject nMarker = obj.getJSONObject("marker");
-		System.err.println(nMarker);
+		//System.err.println(nMarker);
 		
 		JSONArray nColor = (JSONArray) nMarker.get("color");
 		//System.err.println(n2);
@@ -269,7 +269,7 @@ public class testMatrice extends TestCase{
 			}
 			if (i == 1){
 				assertEquals(0.8, nOpa.getDouble(i));
-				System.err.println(nOpa.get(i));
+				//System.err.println(nOpa.get(i));
 			}
 			if (i == 2){
 				assertEquals(0.6, nOpa.getDouble(i));

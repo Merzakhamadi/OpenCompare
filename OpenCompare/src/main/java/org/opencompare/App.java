@@ -62,7 +62,7 @@ public class App {
 		List<String> listProperties = new ArrayList<String>();
 		listProperties = maMatrice.getListPropertiesIntegerValue();
 
-		System.out.println("Caractéristiques :");
+		System.out.println("CaractÃ©ristiques :");
 
 		int count = 0;
 		for (String property : listProperties) {
@@ -75,16 +75,16 @@ public class App {
 		boolean valid = false;
 		while (!valid)
 			try {
-				System.out.print("Saisir au clavier le nombre de paramètre :");
+				System.out.print("Saisir au clavier le nombre de paramÃ¨tre :");
 				nbrProperties = Integer.parseInt(sc.nextLine());
 				if (nbrProperties > 0 && nbrProperties <= 4) {
 					valid = true;
 				} else {
 					System.out
-							.println("Erreur : Paramètre d'entrée doit être compris entre 1 et 4 ");
+							.println("Erreur : ParamÃ¨tre d'entrÃ©e doit Ãªtre compris entre 1 et 4 ");
 				}
 			} catch (NumberFormatException nfe) {
-				System.out.println("Erreur : Paramètre d'entrée non numérique");
+				System.out.println("Erreur : ParamÃ¨tre d'entrï¿½e non numÃ©rique");
 			}
 		System.out.println();
 
@@ -100,7 +100,7 @@ public class App {
 		switch (nbrNeededNbrProperties) {
 		case 1:
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe X : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -108,12 +108,12 @@ public class App {
 
 		case 2:
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe X : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe Y : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -121,16 +121,16 @@ public class App {
 
 		case 3:
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe X : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe Y : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.print("Saisir au clavier la caractéristique size : ");
+			System.out.print("Saisir au clavier la caractÃ©ristique size : ");
 			maMatrice.setPropertyAxisSize(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -138,20 +138,20 @@ public class App {
 
 		case 4:
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe X : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractéristique en Axe Y : ");
+					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.println("Saisir au clavier la caractéristique size: ");
+			System.out.println("Saisir au clavier la caractÃ©ristique size: ");
 			maMatrice.setPropertyAxisSize(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.print("Saisir au clavier la caractéristique color : ");
+			System.out.print("Saisir au clavier la caractÃ©ristique color : ");
 			maMatrice.setPropertyAxisColor(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
