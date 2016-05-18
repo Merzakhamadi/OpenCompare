@@ -104,8 +104,7 @@ public class RootNVD {
 			String jsonInString = mapper.writeValueAsString(this);
 
 			// DELETE { } and "listObjectNVD : " for respect JSON Format
-			jsonInString = jsonInString
-					.substring(17, jsonInString.length() - 1);
+			jsonInString = jsonInString.substring(17, jsonInString.length() - 1);
 
 			FileUtils.writeStringToFile(new File(path), jsonInString);
 

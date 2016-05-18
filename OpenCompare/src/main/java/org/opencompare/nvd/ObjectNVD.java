@@ -8,7 +8,8 @@ public class ObjectNVD {
 	private String key;
 	private List<Values> values;
 
-	public ObjectNVD(String key, String x, String y, String size, String shape, String color) {
+	public ObjectNVD(String key, String x, String y, String size, String shape,
+			String color) {
 		super();
 		this.key = key;
 		this.values = new ArrayList<Values>();
@@ -34,7 +35,8 @@ public class ObjectNVD {
 		private String shape = "circle";
 		private String color;
 
-		public Values(String x, String y, String size, String shape, String color) {
+		public Values(String x, String y, String size, String shape,
+				String color) {
 			super();
 			this.x = x;
 			this.y = y;
@@ -43,7 +45,6 @@ public class ObjectNVD {
 			this.color = color;
 		}
 
-		
 		public String getX() {
 			return x;
 		}
@@ -76,17 +77,14 @@ public class ObjectNVD {
 			this.shape = shape;
 		}
 
-
 		public String getColor() {
 			return color;
 		}
 
-
 		public void setColor(String color) {
 			this.color = color;
 		}
-		
-		
+
 	}
 
 }
