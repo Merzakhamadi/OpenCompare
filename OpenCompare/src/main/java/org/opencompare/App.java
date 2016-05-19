@@ -15,46 +15,65 @@ public class App {
 	public static void main(String[] args) throws IOException {
 		System.out.println("-----------------OPENCOMPARE-------------------");
 		if (args.length == 2) {
-			File f = new File(args[0]);
-			if (f.exists() && f.canRead()) {
-				// HTML
-				HtmlGenerator htmlGenerator;
+			//Input File
+			String filePath = args[0];
+			File f = new File(filePath);
+			
+			if (f.exists() && f.canRead()) 
+			{
 				// MATRICE
 				Matrice maMatrice = new Matrice();
-				maMatrice.importFile(args[0]);
-				maMatrice.setTitre(f.getName());
-				maMatrice.setMatrice(getAxisProperties(maMatrice));
-				maMatrice.writePropertiesAxisFile();
+				maMatrice.importFile(filePath);
+				if(maMatrice.getNbrOfProperties() >=1)
+				{
+					maMatrice.setTitre(f.getName());
+					maMatrice.setMatrice(getAxisProperties(maMatrice));
+					maMatrice.writePropertiesAxisFile();
 
-				if (args[1].equals("-nvd3")) {
-					// NVD
-					RootNVD root = new RootNVD();
-					root.createMap(maMatrice);
-					root.toJson("www/json/nvd.json");
-
-					htmlGenerator = new HtmlGenerator(true, false);
-					htmlGenerator.writeAll();
-
-				} else if (args[1].equals("-plotly")) {
-					// PLOTLY
-					GraphPLOTLY graph = new GraphPLOTLY();
-					graph.getGraph(maMatrice);
-					graph.toJson("www/json/plotly.json");
-
-					htmlGenerator = new HtmlGenerator(false, true);
-					htmlGenerator.writeAll();
-				} else {
-					System.out.println("add param -nvd3 or plotly");
+					//NVD
+					if(args[1].equals("-nvd3")) {
+						generateNvd(maMatrice);
+					}
+					//PLOTLY
+					else if (args[1].equals("-plotly")) {
+						generatePlotly(maMatrice);
+					} 
+					else {
+						System.out.println("Ajouter le parametre -nvd3 ou -plotly");
+					}
 				}
-			} else {
-				System.out.println("input file not exit or not readable");
+				else{
+					System.out.println("Aucune caractéristique comparable !");
+				}
 			}
-		} else {
-			System.out.println("java -jar OpenCompare.jar inputfilepath -nvd3");
-			System.out
-					.println("java -jar OpenCompare.jar inputfilepath -plotly");
+			else { System.out.println("Le fichier indiqué n'existe pas ou n'est pas lisible !"); }
+			
 		}
+		else {
+			System.out.println("java -jar OpenCompare.jar inputfilepath -nvd3");
+			System.out.println("java -jar OpenCompare.jar inputfilepath -plotly");
+		}
+	}
 
+	
+	public static void generatePlotly(Matrice maMatrice){
+		//PLOTLY
+		GraphPLOTLY graph = new GraphPLOTLY();
+		graph.getGraph(maMatrice);
+		graph.toJson("www/json/plotly.json");
+
+		HtmlGenerator htmlGenerator = new HtmlGenerator(false, true);
+		htmlGenerator.writeAll(); 
+	}
+	
+	public static void generateNvd(Matrice maMatrice){
+		//NVD
+		RootNVD root = new RootNVD();
+		root.createMap(maMatrice);
+		root.toJson("www/json/nvd.json");
+	
+		HtmlGenerator htmlGenerator = new HtmlGenerator(true, false);
+		htmlGenerator.writeAll();
 	}
 
 	public static int getNeededNbrProperties(Matrice maMatrice) {
@@ -62,7 +81,7 @@ public class App {
 		List<String> listProperties = new ArrayList<String>();
 		listProperties = maMatrice.getListPropertiesIntegerValue();
 
-		System.out.println("CaractÃ©ristiques :");
+		System.out.println("Caractéristiques :");
 
 		int count = 0;
 		for (String property : listProperties) {
@@ -75,16 +94,16 @@ public class App {
 		boolean valid = false;
 		while (!valid)
 			try {
-				System.out.print("Saisir au clavier le nombre de paramÃ¨tre :");
+				System.out.print("Saisir au clavier le nombre de paramètre : ");
 				nbrProperties = Integer.parseInt(sc.nextLine());
 				if (nbrProperties > 0 && nbrProperties <= 4) {
 					valid = true;
 				} else {
 					System.out
-							.println("Erreur : ParamÃ¨tre d'entrÃ©e doit Ãªtre compris entre 1 et 4 ");
+							.println("Erreur : Paramètre d'entrée doit être compris entre 1 et 4 ");
 				}
 			} catch (NumberFormatException nfe) {
-				System.out.println("Erreur : ParamÃ¨tre d'entrï¿½e non numÃ©rique");
+				System.out.println("Erreur : Paramètre d'entrée non numérique");
 			}
 		System.out.println();
 
@@ -100,7 +119,7 @@ public class App {
 		switch (nbrNeededNbrProperties) {
 		case 1:
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
+					.print("Saisir au clavier la caractéristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -108,12 +127,12 @@ public class App {
 
 		case 2:
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
+					.print("Saisir au clavier la caractéristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
+					.print("Saisir au clavier la caractéristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -121,16 +140,16 @@ public class App {
 
 		case 3:
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
+					.print("Saisir au clavier la caractéristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
+					.print("Saisir au clavier la caractéristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.print("Saisir au clavier la caractÃ©ristique size : ");
+			System.out.print("Saisir au clavier la caractéristique size : ");
 			maMatrice.setPropertyAxisSize(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
@@ -138,20 +157,20 @@ public class App {
 
 		case 4:
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe X : ");
+					.print("Saisir au clavier la caractéristique en Axe X : ");
 			maMatrice.setPropertyAxisX(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
 			System.out
-					.print("Saisir au clavier la caractÃ©ristique en Axe Y : ");
+					.print("Saisir au clavier la caractéristique en Axe Y : ");
 			maMatrice.setPropertyAxisY(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.println("Saisir au clavier la caractÃ©ristique size: ");
+			System.out.print("Saisir au clavier la caractéristique size : ");
 			maMatrice.setPropertyAxisSize(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
-			System.out.print("Saisir au clavier la caractÃ©ristique color : ");
+			System.out.print("Saisir au clavier la caractéristique color : ");
 			maMatrice.setPropertyAxisColor(listProperties.get(sc.nextInt()));
 			System.out
 					.println("-------------------------------------------------");
