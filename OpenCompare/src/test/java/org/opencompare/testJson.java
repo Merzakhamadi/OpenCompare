@@ -16,6 +16,7 @@ import org.opencompare.nvd.RootNVD;
 import org.opencompare.objects.Item;
 import org.opencompare.objects.Matrice;
 import org.opencompare.objects.Property;
+import org.opencompare.plotly.GraphPLOTLY;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -205,10 +206,33 @@ public class testJson extends TestCase{
 			}
 		}
 		
-		//n1.getJSONObject("color");
-		//JSONObject vls = a.get		
-		//String x = vls.getString("x");
+		
 		
 	}
-
+	
+		@Test
+		public void testJsonWithPcmExamplePlot() throws IOException{
+			//PCM pcm = null;									//variable de Type PCM
+			Matrice maMatrice = new Matrice();			// variable de Matrice
+			GraphPLOTLY jsonPlot = new GraphPLOTLY();
+			File f = new File("www/json/example.json");
+			
+			maMatrice.importPcmFile("pcms/example.pcm");	//On fait un import d'un pcm donne
+			maMatrice.setMatrice(3);
+			maMatrice.setPropertyAxisX("");
+			maMatrice.setPropertyAxisY("");
+			maMatrice.setPropertyAxisSize("");
+			maMatrice.setPropertyAxisColor("");
+			
+			jsonPlot.toJson("pcms/example.pcm");
+			//f.exists();
+			//assertNull(f);
+			//System.err.println(f.getName());
+			
+		}
+	
+		@Test
+		public void testJsonWithPcmExampleNvd(){
+			
+		}
 }
