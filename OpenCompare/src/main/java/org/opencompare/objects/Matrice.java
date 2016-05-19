@@ -187,6 +187,26 @@ public class Matrice {
 			this.addItemToList(i);
 		}
 	}
+	
+	public void setMatriceAll()
+	{
+			for (Product product : pcm.getProducts()) {
+				Item i = new Item(product.getKeyContent());
+
+				for (Feature feature : pcm.getConcreteFeatures()) {
+
+					// Find the cell corresponding to the current feature and
+					// product
+					Cell cell = product.findCell(feature);
+
+					// Get information contained in the cell
+					String content = cell.getContent();
+					Property p = new Property(feature.getName(), content);
+					i.addPropertyToList(p);
+					this.addItemToList(i);
+				}
+			}
+	}
 
 	public static boolean isNumeric(String str) {
 		for (char c : str.toCharArray()) {
